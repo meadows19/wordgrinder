@@ -51,7 +51,11 @@ LUA_PACKAGE ?= builtin
 ifneq ($(wildcard /usr/include/X11/Xft/Xft.h),)
 	XFT_PACKAGE ?= --libs={-lX11 -lXft}
 else
-	XFT_PACKAGE ?= none
+	ifneq ($(wildcard /opt/X11/include/X11/Xft/Xft.h),)
+		XFT_PACKAGE ?= --libs={-lX11 -lXft}
+	else
+		XFT_PACKAGE ?= none
+	endif
 endif
 
 # Hack to try and detect OSX's non-pkg-config compliant ncurses.
